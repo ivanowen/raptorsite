@@ -33,10 +33,7 @@
                             <MudChip T="string" Size="Size.Small" Color="@GetPositionColor(player.Position)" Class="mt-1">
                                 @GetPositionName(player.Position)
                             </MudChip>
-                            @if (player.Age.HasValue)
-                            {
-                                <MudText Typo="Typo.body2" Class="mt-2 text-muted">Age: @player.Age</MudText>
-                            }
+                            
                             <MudText Typo="Typo.body2" Class="mt-2">@player.Description</MudText>
                         </MudCardContent>
                     </MudCard>

@@ -9,26 +9,26 @@ public class TeamDataService
         return new List<Player>
         {
             // Goalkeepers
-            new Player { Id = 1, JerseyNumber = 1, FirstName = "Lucas", LastName = "Martinez", Position = PlayerPosition.Goalkeeper, PhotoUrl = "images/players/player-placeholder.png", Description = "Team captain and starting goalkeeper with excellent reflexes.", DateOfBirth = new DateTime(2012, 3, 15) },
-            new Player { Id = 2, JerseyNumber = 12, FirstName = "Noah", LastName = "Williams", Position = PlayerPosition.Goalkeeper, PhotoUrl = "images/players/player-placeholder.png", Description = "Reliable backup goalkeeper with great communication skills.", DateOfBirth = new DateTime(2013, 7, 22) },
-
+            new Player { Id = 1, JerseyNumber = 22, FirstName = "Liam", LastName = "", Position = PlayerPosition.Goalkeeper, PhotoUrl = "images/players/player-placeholder.png", Description = "Team captain and starting goalkeeper with excellent reflexes." },
+        
             // Defenders
-            new Player { Id = 3, JerseyNumber = 2, FirstName = "Ethan", LastName = "Johnson", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Strong right-back known for his speed and tackles.", DateOfBirth = new DateTime(2012, 5, 8) },
-            new Player { Id = 4, JerseyNumber = 3, FirstName = "Mason", LastName = "Brown", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Left-back with excellent crossing ability.", DateOfBirth = new DateTime(2012, 11, 3) },
-            new Player { Id = 5, JerseyNumber = 4, FirstName = "Oliver", LastName = "Davis", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Center-back and defensive leader.", DateOfBirth = new DateTime(2012, 1, 19) },
-            new Player { Id = 6, JerseyNumber = 5, FirstName = "William", LastName = "Garcia", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Tall center-back great in the air.", DateOfBirth = new DateTime(2012, 9, 27) },
+            new Player { Id = 3, JerseyNumber = 7, FirstName = "Jacob", LastName = "", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Strong right-back known for his speed and tackles." },
+            new Player { Id = 4, JerseyNumber = 4, FirstName = "Oliver", LastName = "", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Left-back with excellent crossing ability." },
+            new Player { Id = 5, JerseyNumber = 24, FirstName = "Christopher", LastName = "", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Center-back and defensive leader."},
+            new Player { Id = 6, JerseyNumber = 13, FirstName = "Ivan", LastName = "", Position = PlayerPosition.Defender, PhotoUrl = "images/players/player-placeholder.png", Description = "Tall center-back great in the air." },
 
             // Midfielders
-            new Player { Id = 7, JerseyNumber = 6, FirstName = "James", LastName = "Rodriguez", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Defensive midfielder with excellent positioning.", DateOfBirth = new DateTime(2012, 4, 12) },
-            new Player { Id = 8, JerseyNumber = 8, FirstName = "Benjamin", LastName = "Wilson", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Box-to-box midfielder with endless energy.", DateOfBirth = new DateTime(2012, 6, 30) },
-            new Player { Id = 9, JerseyNumber = 10, FirstName = "Alexander", LastName = "Anderson", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Creative playmaker and set-piece specialist.", DateOfBirth = new DateTime(2012, 2, 14) },
-            new Player { Id = 10, JerseyNumber = 14, FirstName = "Daniel", LastName = "Thomas", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Right winger with great dribbling skills.", DateOfBirth = new DateTime(2013, 1, 5) },
-            new Player { Id = 11, JerseyNumber = 11, FirstName = "Henry", LastName = "Jackson", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Left winger known for his pace.", DateOfBirth = new DateTime(2012, 8, 18) },
-
+            new Player { Id = 17, JerseyNumber = 17, FirstName = "Austin", LastName = "", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Defensive midfielder with excellent positioning." },
+            new Player { Id = 8, JerseyNumber = 6, FirstName = "Kenny", LastName = "", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Box-to-box midfielder with endless energy." },
+            new Player { Id = 9, JerseyNumber = 18, FirstName = "David", LastName = "", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Creative playmaker and set-piece specialist." },
+            new Player { Id = 10, JerseyNumber = 15, FirstName = "Kai", LastName = "", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Right winger with great dribbling skills." },
+            new Player { Id = 11, JerseyNumber = 12, FirstName = "Milo", LastName = "", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Left winger known for his pace." },
+            new Player { Id = 12, JerseyNumber = 10, FirstName = "Sawyer", LastName = "", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Left winger known for his pace." },
+             new Player { Id = 13, JerseyNumber = 9, FirstName = "Alec", LastName = "", Position = PlayerPosition.Midfielder, PhotoUrl = "images/players/player-placeholder.png", Description = "Left winger known for his pace." },
             // Forwards
-            new Player { Id = 12, JerseyNumber = 9, FirstName = "Sebastian", LastName = "White", Position = PlayerPosition.Forward, PhotoUrl = "images/players/player-placeholder.png", Description = "Clinical striker and top scorer.", DateOfBirth = new DateTime(2012, 10, 9) },
-            new Player { Id = 13, JerseyNumber = 7, FirstName = "Jack", LastName = "Harris", Position = PlayerPosition.Forward, PhotoUrl = "images/players/player-placeholder.png", Description = "Versatile forward who can play anywhere in attack.", DateOfBirth = new DateTime(2012, 12, 1) },
-            new Player { Id = 14, JerseyNumber = 17, FirstName = "Michael", LastName = "Martin", Position = PlayerPosition.Forward, PhotoUrl = "images/players/player-placeholder.png", Description = "Young talent with great potential.", DateOfBirth = new DateTime(2013, 3, 25) },
+            new Player { Id = 12, JerseyNumber = 16, FirstName = "Benji", LastName = "", Position = PlayerPosition.Forward, PhotoUrl = "images/players/player-placeholder.png", Description = "Clinical striker and top scorer." },
+            new Player { Id = 13, JerseyNumber = 2, FirstName = "Gio", LastName = "", Position = PlayerPosition.Forward, PhotoUrl = "images/players/player-placeholder.png", Description = "Versatile forward who can play anywhere in attack." },
+            new Player { Id = 14, JerseyNumber = 14, FirstName = "Adrian", LastName = "", Position = PlayerPosition.Forward, PhotoUrl = "images/players/player-placeholder.png", Description = "Young talent with great potential." },
         };
     }
 
