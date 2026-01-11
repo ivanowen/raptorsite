@@ -1,0 +1,125 @@
+@page "/standings"
+@using RaptorsWWW.Models
+@using RaptorsWWW.Services
+@inject TeamDataService DataService
+
+<PageTitle>FC Raptors - Standings</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+    <MudText Typo="Typo.h3" Color="Color.Primary" GutterBottom="true">
+        <MudIcon Icon="@Icons.Material.Filled.Leaderboard" Class="mr-2" /> League Standings
+    </MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-6 text-muted">Current season standings</MudText>
+
+    <MudPaper Elevation="3">
+        <MudTable Items="@_standings" Hover="true" Striped="true" Dense="false" Class="standings-table">
+            <HeaderContent>
+                <MudTh Style="width: 50px;">Pos</MudTh>
+                <MudTh>Team</MudTh>
+                <MudTh Style="text-align: center;">P</MudTh>
+                <MudTh Style="text-align: center;">W</MudTh>
+                <MudTh Style="text-align: center;">D</MudTh>
+                <MudTh Style="text-align: center;">L</MudTh>
+                <MudTh Style="text-align: center;">GF</MudTh>
+                <MudTh Style="text-align: center;">GA</MudTh>
+                <MudTh Style="text-align: center;">GD</MudTh>
+                <MudTh Style="text-align: center; font-weight: bold;">Pts</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Pos">
+                    <MudChip T="string" Size="Size.Small" Color="@GetPositionColor(context.Position)" Variant="Variant.Filled">
+                        @context.Position
+                    </MudChip>
+                </MudTd>
+                <MudTd DataLabel="Team">
+                    <div class="d-flex align-center @(context.IsRaptors ? "raptors-row" : "")">
+                        <img src="@context.LogoUrl" alt="@context.TeamName" style="height: 30px; margin-right: 12px;" />
+                        <MudText Style="@(context.IsRaptors ? "font-weight: bold; color: #1A237E;" : "")">
+                            @context.TeamName
+                        </MudText>
+                        @if (context.IsRaptors)
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Star" Size="Size.Small" Color="Color.Warning" Class="ml-2" />
+                        }
+                    </div>
+                </MudTd>
+                <MudTd DataLabel="P" Style="text-align: center;">@context.GamesPlayed</MudTd>
+                <MudTd DataLabel="W" Style="text-align: center; color: #4CAF50;">@context.Wins</MudTd>
+                <MudTd DataLabel="D" Style="text-align: center; color: #FFC107;">@context.Draws</MudTd>
+                <MudTd DataLabel="L" Style="text-align: center; color: #F44336;">@context.Losses</MudTd>
+                <MudTd DataLabel="GF" Style="text-align: center;">@context.GoalsFor</MudTd>
+                <MudTd DataLabel="GA" Style="text-align: center;">@context.GoalsAgainst</MudTd>
+                <MudTd DataLabel="GD" Style="text-align: center;">
+                    <span style="color: @(context.GoalDifference >= 0 ? "#4CAF50" : "#F44336")">
+                        @(context.GoalDifference >= 0 ? "+" : "")@context.GoalDifference
+                    </span>
+                </MudTd>
+                <MudTd DataLabel="Pts" Style="text-align: center;">
+                    <MudText Typo="Typo.h6" Style="font-weight: bold;">@context.Points</MudText>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudPaper>
+
+    <MudPaper Class="pa-4 mt-6" Elevation="2">
+        <MudText Typo="Typo.subtitle1" GutterBottom="true">Legend</MudText>
+        <MudGrid>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>P</strong> - Played</MudText>
+            </MudItem>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>W</strong> - Wins</MudText>
+            </MudItem>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>D</strong> - Draws</MudText>
+            </MudItem>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>L</strong> - Losses</MudText>
+            </MudItem>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>GF</strong> - Goals For</MudText>
+            </MudItem>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>GA</strong> - Goals Against</MudText>
+            </MudItem>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>GD</strong> - Goal Difference</MudText>
+            </MudItem>
+            <MudItem xs="6" sm="3">
+                <MudText Typo="Typo.body2"><strong>Pts</strong> - Points</MudText>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</MudContainer>
+
+<style>
+    .standings-table .mud-table-row:hover {
+        background-color: rgba(26, 35, 126, 0.05);
+    }
+
+    .raptors-row {
+        background-color: rgba(26, 35, 126, 0.1);
+    }
+
+    .text-muted {
+        color: #666;
+    }
+</style>
+
+@code {
+    private List<TeamStanding> _standings = new();
+
+    protected override void OnInitialized()
+    {
+        _standings = DataService.GetStandings();
+    }
+
+    private Color GetPositionColor(int position) => position switch
+    {
+        1 => Color.Success,
+        2 => Color.Info,
+        3 => Color.Info,
+        >= 8 => Color.Warning,
+        _ => Color.Default
+    };
+}

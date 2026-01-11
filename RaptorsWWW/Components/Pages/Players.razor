@@ -1,0 +1,112 @@
+@page "/players"
+@using RaptorsWWW.Models
+@using RaptorsWWW.Services
+@inject TeamDataService DataService
+
+<PageTitle>FC Raptors - Players</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+    <MudText Typo="Typo.h3" Color="Color.Primary" GutterBottom="true">
+        <MudIcon Icon="@Icons.Material.Filled.Groups" Class="mr-2" /> Squad
+    </MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-6 text-muted">Meet the FC Raptors players</MudText>
+
+    @foreach (var positionGroup in _players.GroupBy(p => p.Position).OrderBy(g => g.Key))
+    {
+        <MudText Typo="Typo.h5" Class="mt-6 mb-4" Style="color: #1A237E; border-bottom: 2px solid #D32F2F; padding-bottom: 8px;">
+            @GetPositionName(positionGroup.Key)
+        </MudText>
+
+        <MudGrid>
+            @foreach (var player in positionGroup.OrderBy(p => p.JerseyNumber))
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <MudCard Class="player-card" Elevation="3">
+                        <div class="player-image-container">
+                            <div class="jersey-number">@player.JerseyNumber</div>
+                            <MudImage Src="@player.PhotoUrl" Alt="@player.FullName"
+                                      ObjectFit="ObjectFit.Cover" Height="200"
+                                      Class="player-image" Style="width: 100%;" />
+                        </div>
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">@player.FullName</MudText>
+                            <MudChip T="string" Size="Size.Small" Color="@GetPositionColor(player.Position)" Class="mt-1">
+                                @GetPositionName(player.Position)
+                            </MudChip>
+                            @if (player.Age.HasValue)
+                            {
+                                <MudText Typo="Typo.body2" Class="mt-2 text-muted">Age: @player.Age</MudText>
+                            }
+                            <MudText Typo="Typo.body2" Class="mt-2">@player.Description</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+</MudContainer>
+
+<style>
+    .player-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        overflow: hidden;
+    }
+
+    .player-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .player-image-container {
+        position: relative;
+        background: linear-gradient(135deg, #1A237E 0%, #D32F2F 100%);
+    }
+
+    .player-image {
+        opacity: 0.9;
+    }
+
+    .jersey-number {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #D32F2F;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 5px 12px;
+        border-radius: 4px;
+        z-index: 1;
+    }
+
+    .text-muted {
+        color: #666;
+    }
+</style>
+
+@code {
+    private List<Player> _players = new();
+
+    protected override void OnInitialized()
+    {
+        _players = DataService.GetPlayers();
+    }
+
+    private string GetPositionName(PlayerPosition position) => position switch
+    {
+        PlayerPosition.Goalkeeper => "Goalkeepers",
+        PlayerPosition.Defender => "Defenders",
+        PlayerPosition.Midfielder => "Midfielders",
+        PlayerPosition.Forward => "Forwards",
+        _ => position.ToString()
+    };
+
+    private Color GetPositionColor(PlayerPosition position) => position switch
+    {
+        PlayerPosition.Goalkeeper => Color.Warning,
+        PlayerPosition.Defender => Color.Info,
+        PlayerPosition.Midfielder => Color.Success,
+        PlayerPosition.Forward => Color.Error,
+        _ => Color.Default
+    };
+}

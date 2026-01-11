@@ -1,0 +1,175 @@
+@page "/gallery"
+@using RaptorsWWW.Models
+@using RaptorsWWW.Services
+@inject TeamDataService DataService
+
+<PageTitle>FC Raptors - Photo Gallery</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+    <MudText Typo="Typo.h3" Color="Color.Primary" GutterBottom="true">
+        <MudIcon Icon="@Icons.Material.Filled.PhotoLibrary" Class="mr-2" /> Photo Gallery
+    </MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-4 text-muted">Memories from the pitch</MudText>
+
+    <MudChipSet T="PhotoCategory?" @bind-SelectedValue="_selectedCategory" SelectionMode="SelectionMode.SingleSelection" Class="mb-6">
+        <MudChip T="PhotoCategory?" Value="@((PhotoCategory?)null)" Color="Color.Primary" Variant="Variant.Outlined">All</MudChip>
+        @foreach (PhotoCategory category in Enum.GetValues<PhotoCategory>())
+        {
+            <MudChip T="PhotoCategory?" Value="@category" Color="@GetCategoryColor(category)" Variant="Variant.Outlined">
+                @category.ToString()
+            </MudChip>
+        }
+    </MudChipSet>
+
+    <MudGrid>
+        @foreach (var photo in FilteredPhotos)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudCard Class="gallery-card" Elevation="3" @onclick="() => OpenPhoto(photo)">
+                    <div class="gallery-image-container">
+                        <MudImage Src="@photo.ThumbnailUrl" Alt="@photo.Title"
+                                  ObjectFit="ObjectFit.Cover" Height="200"
+                                  Class="gallery-image" Style="width: 100%;" />
+                        <div class="gallery-overlay">
+                            <MudIcon Icon="@Icons.Material.Filled.ZoomIn" Size="Size.Large" />
+                        </div>
+                        <MudChip T="string" Size="Size.Small" Color="@GetCategoryColor(photo.Category)"
+                                 Class="category-chip">
+                            @photo.Category.ToString()
+                        </MudChip>
+                    </div>
+                    <MudCardContent>
+                        <MudText Typo="Typo.subtitle1">@photo.Title</MudText>
+                        <MudText Typo="Typo.body2" Class="text-muted">
+                            <MudIcon Icon="@Icons.Material.Filled.CalendarToday" Size="Size.Small" Class="mr-1" />
+                            @photo.DateTaken.ToString("MMM d, yyyy")
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="mt-2">@photo.Description</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+
+    @if (!FilteredPhotos.Any())
+    {
+        <MudPaper Class="pa-8 text-center" Elevation="0">
+            <MudIcon Icon="@Icons.Material.Filled.PhotoCamera" Size="Size.Large" Color="Color.Default" />
+            <MudText Typo="Typo.h6" Class="mt-4">No photos in this category yet</MudText>
+            <MudText Typo="Typo.body2" Class="text-muted">Check back soon for more content!</MudText>
+        </MudPaper>
+    }
+</MudContainer>
+
+<MudDialog @bind-Visible="_photoDialogVisible" Options="@(new DialogOptions { MaxWidth = MaxWidth.Large, FullWidth = true })">
+    <TitleContent>
+        <MudText Typo="Typo.h6">@_selectedPhoto?.Title</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_selectedPhoto != null)
+        {
+            <MudImage Src="@_selectedPhoto.ImageUrl" Alt="@_selectedPhoto.Title"
+                      ObjectFit="ObjectFit.Contain" Style="width: 100%; max-height: 70vh;" />
+            <MudText Typo="Typo.body1" Class="mt-4">@_selectedPhoto.Description</MudText>
+            <MudText Typo="Typo.body2" Class="text-muted">
+                @_selectedPhoto.DateTaken.ToString("MMMM d, yyyy")
+            </MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="ClosePhoto">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<style>
+    .gallery-card {
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        overflow: hidden;
+    }
+
+    .gallery-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .gallery-image-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gallery-image {
+        transition: transform 0.3s;
+    }
+
+    .gallery-card:hover .gallery-image {
+        transform: scale(1.05);
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(26, 35, 126, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+        color: white;
+    }
+
+    .gallery-card:hover .gallery-overlay {
+        opacity: 1;
+    }
+
+    .category-chip {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .text-muted {
+        color: #666;
+    }
+</style>
+
+@code {
+    private List<Photo> _photos = new();
+    private PhotoCategory? _selectedCategory = null;
+    private Photo? _selectedPhoto = null;
+    private bool _photoDialogVisible = false;
+
+    private IEnumerable<Photo> FilteredPhotos => _selectedCategory.HasValue
+        ? _photos.Where(p => p.Category == _selectedCategory.Value).OrderByDescending(p => p.DateTaken)
+        : _photos.OrderByDescending(p => p.DateTaken);
+
+    protected override void OnInitialized()
+    {
+        _photos = DataService.GetPhotos();
+    }
+
+    private void OpenPhoto(Photo photo)
+    {
+        _selectedPhoto = photo;
+        _photoDialogVisible = true;
+    }
+
+    private void ClosePhoto()
+    {
+        _photoDialogVisible = false;
+        _selectedPhoto = null;
+    }
+
+    private Color GetCategoryColor(PhotoCategory category) => category switch
+    {
+        PhotoCategory.Training => Color.Info,
+        PhotoCategory.Match => Color.Error,
+        PhotoCategory.Team => Color.Primary,
+        PhotoCategory.Events => Color.Success,
+        PhotoCategory.Awards => Color.Warning,
+        _ => Color.Default
+    };
+}

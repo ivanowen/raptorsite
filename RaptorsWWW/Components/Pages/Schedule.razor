@@ -1,0 +1,110 @@
+@page "/schedule"
+@using RaptorsWWW.Models
+@using RaptorsWWW.Services
+@inject TeamDataService DataService
+
+<PageTitle>FC Raptors - Schedule</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+    <MudText Typo="Typo.h3" Color="Color.Primary" GutterBottom="true">
+        <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Class="mr-2" /> Upcoming Matches
+    </MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-6 text-muted">Don't miss a game!</MudText>
+
+    @if (!_upcomingGames.Any())
+    {
+        <MudPaper Class="pa-8 text-center" Elevation="2">
+            <MudIcon Icon="@Icons.Material.Filled.EventBusy" Size="Size.Large" Color="Color.Default" />
+            <MudText Typo="Typo.h6" Class="mt-4">No upcoming matches scheduled</MudText>
+            <MudText Typo="Typo.body2" Class="text-muted">Check back soon for new fixtures!</MudText>
+        </MudPaper>
+    }
+    else
+    {
+        @foreach (var monthGroup in _upcomingGames.GroupBy(g => new { g.GameDate.Year, g.GameDate.Month }).OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month))
+        {
+            <MudText Typo="Typo.h5" Class="mt-6 mb-4" Style="color: #1A237E;">
+                @(new DateTime(monthGroup.Key.Year, monthGroup.Key.Month, 1).ToString("MMMM yyyy"))
+            </MudText>
+
+            @foreach (var game in monthGroup.OrderBy(g => g.GameDate))
+            {
+                <MudPaper Class="match-card pa-4 mb-4" Elevation="2">
+                    <MudGrid AlignItems="Center">
+                        <MudItem xs="12" sm="2" Class="text-center">
+                            <MudText Typo="Typo.h6" Color="Color.Primary">@game.GameDate.ToString("ddd")</MudText>
+                            <MudText Typo="Typo.h4" Style="color: #D32F2F; font-weight: bold;">@game.GameDate.Day</MudText>
+                            <MudText Typo="Typo.body2">@game.GameDate.ToString("MMM")</MudText>
+                            <MudText Typo="Typo.body2" Class="text-muted">@game.GameDate.ToString("h:mm tt")</MudText>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="7">
+                            <MudGrid AlignItems="Center" Justify="Justify.Center">
+                                <MudItem xs="5" Class="text-center">
+                                    <img src="@(game.IsHomeGame ? "images/raptors-logo.png" : game.OpponentLogoUrl)"
+                                         alt="@(game.IsHomeGame ? "FC Raptors" : game.Opponent)"
+                                         style="height: 50px; max-width: 100%;" />
+                                    <MudText Typo="Typo.subtitle1" Class="mt-2">
+                                        @(game.IsHomeGame ? "FC Raptors" : game.Opponent)
+                                    </MudText>
+                                </MudItem>
+                                <MudItem xs="2" Class="text-center">
+                                    <MudText Typo="Typo.h5" Color="Color.Secondary">VS</MudText>
+                                </MudItem>
+                                <MudItem xs="5" Class="text-center">
+                                    <img src="@(game.IsHomeGame ? game.OpponentLogoUrl : "images/raptors-logo.png")"
+                                         alt="@(game.IsHomeGame ? game.Opponent : "FC Raptors")"
+                                         style="height: 50px; max-width: 100%;" />
+                                    <MudText Typo="Typo.subtitle1" Class="mt-2">
+                                        @(game.IsHomeGame ? game.Opponent : "FC Raptors")
+                                    </MudText>
+                                </MudItem>
+                            </MudGrid>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="3" Class="text-center">
+                            <MudChip T="string" Color="@(game.IsHomeGame ? Color.Success : Color.Warning)" Size="Size.Small">
+                                @(game.IsHomeGame ? "HOME" : "AWAY")
+                            </MudChip>
+                            <MudText Typo="Typo.body2" Class="mt-2">
+                                <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="Size.Small" />
+                                @game.Venue
+                            </MudText>
+                            <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="mt-2">
+                                @game.Competition
+                            </MudChip>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            }
+        }
+    }
+</MudContainer>
+
+<style>
+    .match-card {
+        border-left: 4px solid #1A237E;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .match-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .text-muted {
+        color: #666;
+    }
+</style>
+
+@code {
+    private List<Game> _upcomingGames = new();
+
+    protected override void OnInitialized()
+    {
+        _upcomingGames = DataService.GetGames()
+            .Where(g => !g.IsCompleted && g.GameDate >= DateTime.Today)
+            .OrderBy(g => g.GameDate)
+            .ToList();
+    }
+}

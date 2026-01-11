@@ -1,35 +1,64 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider Theme="@_theme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1">
+    <MudAppBar Elevation="2" Style="background: linear-gradient(90deg, #1A237E 0%, #283593 100%);">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
-        <MudText Typo="Typo.h5" Class="ml-3">Raptors Soccer</MudText>
+        <MudImage Src="images/raptors-logo.png" Alt="FC Raptors" Height="40" Class="ml-2" />
+        <MudText Typo="Typo.h5" Class="ml-3" Style="font-weight: bold;">FC RAPTORS</MudText>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.Sports" Color="Color.Inherit" />
+        <MudIconButton Icon="@Icons.Material.Filled.SportsSoccer" Color="Color.Inherit" Href="/" />
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+    <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Variant="DrawerVariant.Responsive">
+        <MudDrawerHeader Style="background: linear-gradient(180deg, #1A237E 0%, #283593 100%); padding: 16px;">
+            <div class="d-flex flex-column align-center" style="width: 100%;">
+                <MudImage Src="images/raptors-logo.png" Alt="FC Raptors" Height="80" />
+                <MudText Typo="Typo.subtitle1" Style="color: white; margin-top: 8px;">Youth Soccer Club</MudText>
+            </div>
+        </MudDrawerHeader>
         <NavMenu />
     </MudDrawer>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4 pt-4">
-            @Body
-        </MudContainer>
+    <MudMainContent Class="pt-16">
+        @Body
     </MudMainContent>
 </MudLayout>
+
+<MudScrollToTop>
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowUpward" />
+</MudScrollToTop>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
+    <span class="dismiss">X</span>
 </div>
 
 @code {
     private bool _drawerOpen = true;
+
+    private MudTheme _theme = new MudTheme
+    {
+        PaletteLight = new PaletteLight
+        {
+            Primary = "#1A237E",
+            Secondary = "#D32F2F",
+            AppbarBackground = "#1A237E",
+            DrawerBackground = "#FAFAFA",
+            DrawerText = "#1A237E",
+            Success = "#4CAF50",
+            Warning = "#FFC107",
+            Error = "#D32F2F",
+            Info = "#2196F3"
+        },
+        LayoutProperties = new LayoutProperties
+        {
+            DefaultBorderRadius = "4px"
+        }
+    };
 
     private void ToggleDrawer()
     {

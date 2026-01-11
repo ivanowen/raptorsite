@@ -1,0 +1,173 @@
+@page "/results"
+@using RaptorsWWW.Models
+@using RaptorsWWW.Services
+@inject TeamDataService DataService
+
+<PageTitle>FC Raptors - Results</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+    <MudText Typo="Typo.h3" Color="Color.Primary" GutterBottom="true">
+        <MudIcon Icon="@Icons.Material.Filled.Scoreboard" Class="mr-2" /> Match Results
+    </MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-6 text-muted">Recent match results</MudText>
+
+    @if (!_completedGames.Any())
+    {
+        <MudPaper Class="pa-8 text-center" Elevation="2">
+            <MudIcon Icon="@Icons.Material.Filled.SportsScore" Size="Size.Large" Color="Color.Default" />
+            <MudText Typo="Typo.h6" Class="mt-4">No results yet</MudText>
+            <MudText Typo="Typo.body2" Class="text-muted">Match results will appear here after games are played.</MudText>
+        </MudPaper>
+    }
+    else
+    {
+        <MudPaper Class="pa-4 mb-6" Elevation="2" Style="background: linear-gradient(135deg, #1A237E 0%, #D32F2F 100%);">
+            <MudGrid>
+                <MudItem xs="4" Class="text-center">
+                    <MudText Typo="Typo.h3" Style="color: #4CAF50; font-weight: bold;">@_wins</MudText>
+                    <MudText Style="color: white;">Wins</MudText>
+                </MudItem>
+                <MudItem xs="4" Class="text-center">
+                    <MudText Typo="Typo.h3" Style="color: #FFC107; font-weight: bold;">@_draws</MudText>
+                    <MudText Style="color: white;">Draws</MudText>
+                </MudItem>
+                <MudItem xs="4" Class="text-center">
+                    <MudText Typo="Typo.h3" Style="color: #F44336; font-weight: bold;">@_losses</MudText>
+                    <MudText Style="color: white;">Losses</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        @foreach (var monthGroup in _completedGames.GroupBy(g => new { g.GameDate.Year, g.GameDate.Month }).OrderByDescending(g => g.Key.Year).ThenByDescending(g => g.Key.Month))
+        {
+            <MudText Typo="Typo.h5" Class="mt-6 mb-4" Style="color: #1A237E;">
+                @(new DateTime(monthGroup.Key.Year, monthGroup.Key.Month, 1).ToString("MMMM yyyy"))
+            </MudText>
+
+            @foreach (var game in monthGroup.OrderByDescending(g => g.GameDate))
+            {
+                <MudPaper Class="@($"result-card pa-4 mb-4 {GetResultClass(game.Result)}")" Elevation="2">
+                    <MudGrid AlignItems="Center">
+                        <MudItem xs="12" sm="2" Class="text-center">
+                            <MudText Typo="Typo.body2">@game.GameDate.ToString("ddd, MMM d")</MudText>
+                            <MudChip T="string" Size="Size.Small" Color="@GetResultColor(game.Result)" Class="mt-2">
+                                @GetResultText(game.Result)
+                            </MudChip>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="7">
+                            <MudGrid AlignItems="Center" Justify="Justify.Center">
+                                <MudItem xs="4" Class="text-center">
+                                    <img src="@(game.IsHomeGame ? "images/raptors-logo.png" : game.OpponentLogoUrl)"
+                                         alt="@(game.IsHomeGame ? "FC Raptors" : game.Opponent)"
+                                         style="height: 40px; max-width: 100%;" />
+                                    <MudText Typo="Typo.body1" Class="mt-1">
+                                        @(game.IsHomeGame ? "FC Raptors" : game.Opponent)
+                                    </MudText>
+                                </MudItem>
+                                <MudItem xs="4" Class="text-center">
+                                    <MudPaper Class="score-display pa-2" Elevation="0">
+                                        <MudText Typo="Typo.h4" Style="font-weight: bold;">
+                                            @game.HomeScore - @game.AwayScore
+                                        </MudText>
+                                    </MudPaper>
+                                </MudItem>
+                                <MudItem xs="4" Class="text-center">
+                                    <img src="@(game.IsHomeGame ? game.OpponentLogoUrl : "images/raptors-logo.png")"
+                                         alt="@(game.IsHomeGame ? game.Opponent : "FC Raptors")"
+                                         style="height: 40px; max-width: 100%;" />
+                                    <MudText Typo="Typo.body1" Class="mt-1">
+                                        @(game.IsHomeGame ? game.Opponent : "FC Raptors")
+                                    </MudText>
+                                </MudItem>
+                            </MudGrid>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="3" Class="text-center">
+                            <MudText Typo="Typo.body2">
+                                <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="Size.Small" />
+                                @game.Venue
+                            </MudText>
+                            <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="mt-2">
+                                @game.Competition
+                            </MudChip>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            }
+        }
+    }
+</MudContainer>
+
+<style>
+    .result-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .result-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .result-win {
+        border-left: 4px solid #4CAF50;
+    }
+
+    .result-draw {
+        border-left: 4px solid #FFC107;
+    }
+
+    .result-loss {
+        border-left: 4px solid #F44336;
+    }
+
+    .score-display {
+        background: #f5f5f5;
+        border-radius: 8px;
+    }
+
+    .text-muted {
+        color: #666;
+    }
+</style>
+
+@code {
+    private List<Game> _completedGames = new();
+    private int _wins, _draws, _losses;
+
+    protected override void OnInitialized()
+    {
+        _completedGames = DataService.GetGames()
+            .Where(g => g.IsCompleted)
+            .OrderByDescending(g => g.GameDate)
+            .ToList();
+
+        _wins = _completedGames.Count(g => g.Result == GameResult.Win);
+        _draws = _completedGames.Count(g => g.Result == GameResult.Draw);
+        _losses = _completedGames.Count(g => g.Result == GameResult.Loss);
+    }
+
+    private string GetResultClass(GameResult? result) => result switch
+    {
+        GameResult.Win => "result-win",
+        GameResult.Draw => "result-draw",
+        GameResult.Loss => "result-loss",
+        _ => ""
+    };
+
+    private Color GetResultColor(GameResult? result) => result switch
+    {
+        GameResult.Win => Color.Success,
+        GameResult.Draw => Color.Warning,
+        GameResult.Loss => Color.Error,
+        _ => Color.Default
+    };
+
+    private string GetResultText(GameResult? result) => result switch
+    {
+        GameResult.Win => "WIN",
+        GameResult.Draw => "DRAW",
+        GameResult.Loss => "LOSS",
+        _ => ""
+    };
+}

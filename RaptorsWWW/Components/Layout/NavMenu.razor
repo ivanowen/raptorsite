@@ -1,7 +1,16 @@
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="team" Icon="@Icons.Material.Filled.Groups">Team</MudNavLink>
-    <MudNavLink Href="schedule" Icon="@Icons.Material.Filled.CalendarMonth">Schedule</MudNavLink>
-    <MudNavLink Href="standings" Icon="@Icons.Material.Filled.Leaderboard">Standings</MudNavLink>
-</MudNavMenu>
 
+    <MudNavGroup Title="Team" Icon="@Icons.Material.Filled.Groups" Expanded="true">
+        <MudNavLink Href="players" Icon="@Icons.Material.Filled.Person">Players</MudNavLink>
+        <MudNavLink Href="coaches" Icon="@Icons.Material.Filled.School">Coaches & Staff</MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Matches" Icon="@Icons.Material.Filled.SportsSoccer" Expanded="true">
+        <MudNavLink Href="schedule" Icon="@Icons.Material.Filled.CalendarMonth">Schedule</MudNavLink>
+        <MudNavLink Href="results" Icon="@Icons.Material.Filled.Scoreboard">Results</MudNavLink>
+        <MudNavLink Href="standings" Icon="@Icons.Material.Filled.Leaderboard">Standings</MudNavLink>
+    </MudNavGroup>
+
+    <MudNavLink Href="gallery" Icon="@Icons.Material.Filled.PhotoLibrary">Gallery</MudNavLink>
+</MudNavMenu>

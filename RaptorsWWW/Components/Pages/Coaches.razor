@@ -1,0 +1,114 @@
+@page "/coaches"
+@using RaptorsWWW.Models
+@using RaptorsWWW.Services
+@inject TeamDataService DataService
+
+<PageTitle>FC Raptors - Coaches & Staff</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+    <MudText Typo="Typo.h3" Color="Color.Primary" GutterBottom="true">
+        <MudIcon Icon="@Icons.Material.Filled.School" Class="mr-2" /> Coaching Staff
+    </MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-6 text-muted">Meet our dedicated coaching team</MudText>
+
+    <MudGrid>
+        @foreach (var coach in _coaches.OrderBy(c => c.Role))
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudCard Class="coach-card" Elevation="3">
+                    <div class="coach-image-container">
+                        <MudImage Src="@coach.PhotoUrl" Alt="@coach.FullName"
+                                  ObjectFit="ObjectFit.Cover" Height="250"
+                                  Class="coach-image" Style="width: 100%;" />
+                        <div class="coach-role-badge">@GetRoleName(coach.Role)</div>
+                    </div>
+                    <MudCardContent>
+                        <MudText Typo="Typo.h5">@coach.FullName</MudText>
+                        <MudChip T="string" Size="Size.Small" Color="@GetRoleColor(coach.Role)" Class="mt-2">
+                            @coach.Credentials
+                        </MudChip>
+                        <MudText Typo="Typo.body1" Class="mt-3">@coach.Description</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+
+    <MudPaper Class="pa-6 mt-8" Elevation="2" Style="background: linear-gradient(135deg, #1A237E 0%, #D32F2F 100%);">
+        <MudText Typo="Typo.h5" Style="color: white;" GutterBottom="true">
+            <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-2" /> Our Coaching Philosophy
+        </MudText>
+        <MudText Typo="Typo.body1" Style="color: rgba(255,255,255,0.9);">
+            At FC Raptors, we believe in developing well-rounded players through positive coaching methods.
+            Our staff focuses on technical development, tactical understanding, and most importantly,
+            ensuring every player enjoys their time on the field. We emphasize fair play, respect, and teamwork
+            in everything we do.
+        </MudText>
+    </MudPaper>
+</MudContainer>
+
+<style>
+    .coach-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        overflow: hidden;
+    }
+
+    .coach-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .coach-image-container {
+        position: relative;
+        background: linear-gradient(135deg, #1A237E 0%, #D32F2F 100%);
+    }
+
+    .coach-image {
+        opacity: 0.9;
+    }
+
+    .coach-role-badge {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(26, 35, 126, 0.9));
+        color: white;
+        padding: 20px 15px 10px;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    .text-muted {
+        color: #666;
+    }
+</style>
+
+@code {
+    private List<Coach> _coaches = new();
+
+    protected override void OnInitialized()
+    {
+        _coaches = DataService.GetCoaches();
+    }
+
+    private string GetRoleName(CoachRole role) => role switch
+    {
+        CoachRole.HeadCoach => "Head Coach",
+        CoachRole.AssistantCoach => "Assistant Coach",
+        CoachRole.GoalkeeperCoach => "Goalkeeper Coach",
+        CoachRole.FitnessCoach => "Fitness Coach",
+        CoachRole.TeamManager => "Team Manager",
+        _ => role.ToString()
+    };
+
+    private Color GetRoleColor(CoachRole role) => role switch
+    {
+        CoachRole.HeadCoach => Color.Primary,
+        CoachRole.AssistantCoach => Color.Secondary,
+        CoachRole.GoalkeeperCoach => Color.Warning,
+        CoachRole.FitnessCoach => Color.Success,
+        CoachRole.TeamManager => Color.Info,
+        _ => Color.Default
+    };
+}

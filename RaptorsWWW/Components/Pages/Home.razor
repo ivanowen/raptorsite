@@ -1,99 +1,193 @@
 @page "/"
-@layout ComingSoonLayout
+@using RaptorsWWW.Models
+@using RaptorsWWW.Services
+@inject TeamDataService DataService
 
-<PageTitle>Raptors Soccer - Coming Soon</PageTitle>
+<PageTitle>FC Raptors - Home</PageTitle>
 
-<div class="coming-soon-container">
-    <div class="coming-soon-content">
-        <div class="logo-container">
-            <img src="images/raptors-logo.png" alt="Raptors Soccer" class="team-logo" onerror="this.style.display='none'" />
-            <MudIcon Icon="@Icons.Material.Filled.SportsSoccer" Size="Size.Large" Class="logo-fallback" Style="font-size: 120px; color: #D32F2F;" />
-        </div>
-
-        <MudText Typo="Typo.h2" Class="team-name" Style="color: #1A237E; font-weight: bold; margin-bottom: 8px;">
-            RAPTORS
-        </MudText>
-        <MudText Typo="Typo.h5" Style="color: #D32F2F; margin-bottom: 40px;">
-            Soccer Club
-        </MudText>
-
-        <MudPaper Class="coming-soon-badge" Elevation="0" Style="background: linear-gradient(135deg, #D32F2F 0%, #1A237E 100%); padding: 20px 60px; border-radius: 50px;">
-            <MudText Typo="Typo.h3" Style="color: white; font-weight: bold; letter-spacing: 4px;">
-                COMING SOON
-            </MudText>
-        </MudPaper>
-
-        <MudText Typo="Typo.body1" Class="mt-8" Style="color: #888; max-width: 400px; text-align: center;">
-            We're working hard to bring you an amazing new website. Stay tuned for updates!
-        </MudText>
-
-        <div class="builders-section mt-12">
-            <MudText Typo="Typo.body2" Style="color: #aaa;">
-                Built with passion by
-            </MudText>
-            <MudText Typo="Typo.h5" Style="color: #1A237E; font-weight: bold; margin-top: 8px;">
-                Benji & Gio
-            </MudText>
-            <div class="builder-icons mt-2">
-                <MudIcon Icon="@Icons.Material.Filled.Code" Style="color: #1A237E; margin-right: 8px;" />
-                <MudIcon Icon="@Icons.Material.Filled.Favorite" Style="color: #D32F2F;" />
-                <MudIcon Icon="@Icons.Material.Filled.SportsSoccer" Style="color: #1A237E; margin-left: 8px;" />
-            </div>
+<div class="hero-section">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <img src="images/raptors-logo.png" alt="FC Raptors" class="hero-logo" />
+            <MudText Typo="Typo.h2" Class="hero-title">FC RAPTORS</MudText>
+            <MudText Typo="Typo.h5" Class="hero-subtitle">Youth Soccer Club</MudText>
         </div>
     </div>
 </div>
 
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-8">
+    <MudGrid>
+        <MudItem xs="12" md="8">
+            <MudPaper Class="pa-6" Elevation="2">
+                <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="true">
+                    About Our Club
+                </MudText>
+                <MudText Typo="Typo.body1" Class="mb-4">
+                    @_teamInfo.Description
+                </MudText>
+                <MudText Typo="Typo.body1">
+                    Our dedicated coaching staff works tirelessly to create an environment where young athletes can thrive.
+                    We believe in developing not just soccer skills, but character, discipline, and lifelong friendships.
+                </MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-6" Elevation="2" Style="background: linear-gradient(135deg, #1A237E 0%, #D32F2F 100%); color: white;">
+                <MudText Typo="Typo.h5" Class="mb-4" Style="color: white;">
+                    <MudIcon Icon="@Icons.Material.Filled.EmojiEvents" Class="mr-2" /> Achievements
+                </MudText>
+                <MudList T="string" Dense="true">
+                    @foreach (var achievement in _teamInfo.Achievements)
+                    {
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.Star" IconColor="Color.Warning">
+                            <MudText Style="color: white;">@achievement</MudText>
+                        </MudListItem>
+                    }
+                </MudList>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudText Typo="Typo.h4" Color="Color.Primary" Class="mt-8 mb-4">Quick Links</MudText>
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Class="quick-link-card" Elevation="3">
+                <MudCardContent Class="d-flex flex-column align-center pa-6">
+                    <MudIcon Icon="@Icons.Material.Filled.Groups" Size="Size.Large" Color="Color.Primary" />
+                    <MudText Typo="Typo.h6" Class="mt-3">Players</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center" Class="text-muted">Meet our talented squad</MudText>
+                </MudCardContent>
+                <MudCardActions Class="justify-center pb-4">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/players">View Squad</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Class="quick-link-card" Elevation="3">
+                <MudCardContent Class="d-flex flex-column align-center pa-6">
+                    <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Size="Size.Large" Color="Color.Secondary" />
+                    <MudText Typo="Typo.h6" Class="mt-3">Schedule</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center" Class="text-muted">Upcoming matches</MudText>
+                </MudCardContent>
+                <MudCardActions Class="justify-center pb-4">
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" Href="/schedule">View Schedule</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Class="quick-link-card" Elevation="3">
+                <MudCardContent Class="d-flex flex-column align-center pa-6">
+                    <MudIcon Icon="@Icons.Material.Filled.Leaderboard" Size="Size.Large" Color="Color.Success" />
+                    <MudText Typo="Typo.h6" Class="mt-3">Standings</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center" Class="text-muted">League table</MudText>
+                </MudCardContent>
+                <MudCardActions Class="justify-center pb-4">
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" Href="/standings">View Standings</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    @if (_nextGame != null)
+    {
+        <MudPaper Class="pa-6 mt-8" Elevation="2" Style="border-left: 4px solid #D32F2F;">
+            <MudText Typo="Typo.h5" Color="Color.Primary" GutterBottom="true">
+                <MudIcon Icon="@Icons.Material.Filled.Event" Class="mr-2" /> Next Match
+            </MudText>
+            <MudGrid AlignItems="Center">
+                <MudItem xs="12" sm="4" Class="text-center">
+                    <img src="images/raptors-logo.png" alt="FC Raptors" style="height: 60px;" />
+                    <MudText Typo="Typo.subtitle1" Class="mt-2">FC Raptors</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="4" Class="text-center">
+                    <MudText Typo="Typo.h6" Color="Color.Secondary">VS</MudText>
+                    <MudText Typo="Typo.body2">@_nextGame.GameDate.ToString("ddd, MMM d")</MudText>
+                    <MudText Typo="Typo.body2">@_nextGame.GameDate.ToString("h:mm tt")</MudText>
+                    <MudChip T="string" Size="Size.Small" Color="@(_nextGame.IsHomeGame ? Color.Success : Color.Warning)" Class="mt-2">
+                        @(_nextGame.IsHomeGame ? "HOME" : "AWAY")
+                    </MudChip>
+                </MudItem>
+                <MudItem xs="12" sm="4" Class="text-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Shield" Size="Size.Large" />
+                    <MudText Typo="Typo.subtitle1" Class="mt-2">@_nextGame.Opponent</MudText>
+                </MudItem>
+            </MudGrid>
+            <MudText Typo="Typo.body2" Class="mt-4 text-muted">
+                <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="Size.Small" /> @_nextGame.Venue
+            </MudText>
+        </MudPaper>
+    }
+</MudContainer>
+
 <style>
-    .coming-soon-container {
-        min-height: 100vh;
+    .hero-section {
+        height: 400px;
+        background: linear-gradient(135deg, #1A237E 0%, #283593 50%, #D32F2F 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(180deg, #f5f5f5 0%, #E8EAF6 100%);
-        padding: 20px;
     }
 
-    .coming-soon-content {
+    .hero-content {
         text-align: center;
-        animation: fadeIn 1s ease-in-out;
+        color: white;
     }
 
-    .logo-container {
-        margin-bottom: 30px;
+    .hero-logo {
+        height: 150px;
+        margin-bottom: 20px;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     }
 
-    .team-logo {
-        max-width: 200px;
-        height: auto;
+    .hero-title {
+        color: white;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
-    .logo-fallback {
-        display: block;
+    .hero-subtitle {
+        color: rgba(255,255,255,0.9);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
 
-    .team-logo:not([style*="display: none"]) + .logo-fallback {
-        display: none !important;
+    .quick-link-card {
+        transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .builders-section {
-        padding: 30px;
-        border-top: 1px solid #e0e0e0;
+    .quick-link-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }
 
-    .builder-icons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    @@keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .text-muted {
+        color: #666;
     }
 </style>
+
+@code {
+    private (string Title, string Description, List<string> Achievements) _teamInfo;
+    private Game? _nextGame;
+
+    protected override void OnInitialized()
+    {
+        _teamInfo = DataService.GetTeamInfo();
+        _nextGame = DataService.GetGames()
+            .Where(g => !g.IsCompleted && g.GameDate >= DateTime.Today)
+            .OrderBy(g => g.GameDate)
+            .FirstOrDefault();
+    }
+}

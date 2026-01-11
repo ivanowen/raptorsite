@@ -1,5 +1,6 @@
 using MudBlazor.Services;
 using RaptorsWWW.Components;
+using RaptorsWWW.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddMudServices();
+builder.Services.AddScoped<TeamDataService>();
 
 var app = builder.Build();
 
