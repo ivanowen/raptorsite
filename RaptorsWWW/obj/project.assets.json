@@ -645,32 +645,36 @@
     ]
   },
   "packageFolders": {
-    "C:\\Ng": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Benji\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DevOps\\IOGit\\RaptorsSite\\raptorsite\\RaptorsWWW\\RaptorsWWW.csproj",
+      "projectUniqueName": "D:\\BenjiOwen\\Code\\Raptors\\raptorsite\\RaptorsWWW\\RaptorsWWW.csproj",
       "projectName": "RaptorsWWW",
-      "projectPath": "C:\\DevOps\\IOGit\\RaptorsSite\\raptorsite\\RaptorsWWW\\RaptorsWWW.csproj",
-      "packagesPath": "C:\\Ng",
-      "outputPath": "C:\\DevOps\\IOGit\\RaptorsSite\\raptorsite\\RaptorsWWW\\obj\\",
+      "projectPath": "D:\\BenjiOwen\\Code\\Raptors\\raptorsite\\RaptorsWWW\\RaptorsWWW.csproj",
+      "packagesPath": "C:\\Users\\Benji\\.nuget\\packages\\",
+      "outputPath": "D:\\BenjiOwen\\Code\\Raptors\\raptorsite\\RaptorsWWW\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ivan.owen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Benji\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -687,9 +691,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -719,7 +723,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
