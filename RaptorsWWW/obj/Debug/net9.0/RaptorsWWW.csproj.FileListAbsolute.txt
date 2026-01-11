@@ -97,8 +97,8 @@ C:\DevOps\IOGit\RaptorsSite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.genruntimecon
 C:\DevOps\IOGit\RaptorsSite\RaptorsWWW\obj\Debug\net9.0\ref\RaptorsWWW.dll
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\appsettings.Development.json
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\appsettings.json
-C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\RaptorsWWW.staticwebassets.endpoints.json
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\RaptorsWWW.staticwebassets.runtime.json
+C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\RaptorsWWW.staticwebassets.endpoints.json
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\RaptorsWWW.exe
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\RaptorsWWW.deps.json
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\bin\Debug\net9.0\RaptorsWWW.runtimeconfig.json
@@ -124,6 +124,7 @@ C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.As
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.AssemblyInfo.cs
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.csproj.CoreCompileInputs.cache
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.MvcApplicationPartsAssemblyInfo.cache
+C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.sourcelink.json
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\scopedcss\bundle\RaptorsWWW.styles.css
@@ -186,6 +187,7 @@ C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\staticwebasse
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.RaptorsWWW.props
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.RaptorsWWW.props
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\staticwebassets.pack.json
+C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.csproj.Up2Date
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\RaptorsWWW.dll
 C:\DevOps\IOGit\RaptorsSite\raptorsite\RaptorsWWW\obj\Debug\net9.0\refint\RaptorsWWW.dll

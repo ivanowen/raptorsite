@@ -1,0 +1,117 @@
+# .NET Build outputs
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+[Oo]ut/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+**/packages/*
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+*.userprefs
+
+# Visual Studio cache/options
+*.VisualState.xml
+TestResult.xml
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Visual Studio Trace Files
+*.e2e
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# User-specific files
+*.DotSettings.user
+appsettings.local.json
+appsettings.*.local.json
+
+# Build results
+[Dd]ebugPublic/
+[Rr]eleases/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# MSBuild
+*.log
+msbuild.binlog
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Publish profiles
+*.pubxml
+*.publishproj
+PublishScripts/
+
+# Azure
+*.azurePubxml
+
+# Web publish
+*.Publish.xml
+web.config.bak
+
+# Secrets
+*.pfx
+*.p12
+*.key
+*.pem
+secrets.json
+
+# Entity Framework Migrations
+**/Migrations/*.Designer.cs
+
+# Blazor
+*.staticwebassets.runtime.json
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+coverage/
+*.coverage
+*.coveragexml
+
+# BenchmarkDotNet
+BenchmarkDotNet.Artifacts/
+
+# Publish output
+publish/
+
+# Local development settings
+launchSettings.local.json

@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
+      "Id": "C:\\DevOps\\IOGit\\RaptorsSite\\raptorsite\\RaptorsWWW\\wwwroot\\images\\raptors-logo.png",
+      "PackagePath": "staticwebassets\\images\\raptors-logo.png"
+    },
+    {
       "Id": "C:\\DevOps\\IOGit\\RaptorsSite\\raptorsite\\RaptorsWWW\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
