@@ -3,4 +3,9 @@
 https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Temp\fcraptors.com</_PublishTargetUrl>
+    <History>True|2026-01-11T00:47:35.5402179Z||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
 </Project>
