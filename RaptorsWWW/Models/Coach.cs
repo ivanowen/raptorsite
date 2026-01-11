@@ -9,7 +9,6 @@ public class Coach
     public CoachRole Role { get; set; }
     public string PhotoUrl { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public string Credentials { get; set; } = string.Empty;
 }
 
 public enum CoachRole
