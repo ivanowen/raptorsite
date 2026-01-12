@@ -15,6 +15,8 @@ public class Game
 
     public int? RaptorsScore => IsHomeGame ? HomeScore : AwayScore;
     public int? OpponentScore => IsHomeGame ? AwayScore : HomeScore;
+    public bool WasRescheduled { get; set; } = false;
+    public DateTime? RescheduledTo { get; set; }
 
     public GameResult? Result
     {

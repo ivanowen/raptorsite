@@ -38,7 +38,7 @@
             </MudGrid>
         </MudPaper>
 
-        @foreach (var monthGroup in _completedGames.GroupBy(g => new { g.GameDate.Year, g.GameDate.Month }).OrderByDescending(g => g.Key.Year).ThenByDescending(g => g.Key.Month))
+        @foreach (var monthGroup in _displayGames.GroupBy(g => new { g.GameDate.Year, g.GameDate.Month }).OrderByDescending(g => g.Key.Year).ThenByDescending(g => g.Key.Month))
         {
             <MudText Typo="Typo.h5" Class="mt-6 mb-4" Style="color: #1A237E;">
                 @(new DateTime(monthGroup.Key.Year, monthGroup.Key.Month, 1).ToString("MMMM yyyy"))
@@ -47,11 +47,25 @@
             @foreach (var game in monthGroup.OrderByDescending(g => g.GameDate))
             {
                 <MudPaper Class="@($"result-card pa-4 mb-4 {GetResultClass(game.Result)}")" Elevation="2">
+                    @if (game.WasRescheduled)
+                    {
+                        <MudAlert Severity="Severity.Warning" Class="mb-3">
+                            <MudIcon Icon="@Icons.Material.Filled.EventBusy" Size="Size.Small" Class="mr-2" />
+                            @if (game.RescheduledTo.HasValue)
+                            {
+                                <text>Rescheduled to @game.RescheduledTo.Value.ToString("MMMM d, yyyy")</text>
+                            }
+                            else
+                            {
+                                <text>Rescheduled</text>
+                            }
+                        </MudAlert>
+                    }
                     <MudGrid AlignItems="Center">
                         <MudItem xs="12" sm="2" Class="text-center">
                             <MudText Typo="Typo.body2">@game.GameDate.ToString("ddd, MMM d")</MudText>
-                            <MudChip T="string" Size="Size.Small" Color="@GetResultColor(game.Result)" Class="mt-2">
-                                @GetResultText(game.Result)
+                            <MudChip T="string" Size="Size.Small" Color="@(game.WasRescheduled ? Color.Default : GetResultColor(game.Result))" Class="mt-2">
+                                @(game.WasRescheduled ? "NOT PLAYED" : GetResultText(game.Result))
                             </MudChip>
                         </MudItem>
 
@@ -132,13 +146,21 @@
 </style>
 
 @code {
+    private List<Game> _displayGames = new();
     private List<Game> _completedGames = new();
     private int _wins, _draws, _losses;
 
     protected override void OnInitialized()
     {
+        // Games to display: include completed games and any rescheduled entries so they remain visible
+        _displayGames = DataService.GetGames()
+            .Where(g => g.IsCompleted || g.WasRescheduled)
+            .OrderByDescending(g => g.GameDate)
+            .ToList();
+
+        // Completed games to count: exclude rescheduled games so they're not counted as draws/wins/losses
         _completedGames = DataService.GetGames()
-            .Where(g => g.IsCompleted)
+            .Where(g => g.IsCompleted && !g.WasRescheduled)
             .OrderByDescending(g => g.GameDate)
             .ToList();
 
